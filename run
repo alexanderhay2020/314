@@ -1,0 +1,33 @@
+import numpy as np
+
+points = np.array([(-2.5, 0.5),(2.5, 0.5),(2.5, -0.5),(-2.5,-0.5),(-2.5, 0.5)])
+
+next_points = np.zeros((5,3))
+
+theta = 0
+
+# Translation
+p = np.array([[5,0]])
+
+# Rotation
+R = np.array([[np.cos(theta), -np.sin(theta)], [np.sin(theta), np.cos(theta)]])
+
+# Transformation Matrix
+g = np.append(R,p.T,axis=1)
+g = np.append(g,np.array([[0,0,1]]),axis=0)
+
+for i in range(len(points)):
+
+  # Homogeneous Representation
+  temp = np.expand_dims(points[i],axis=0)
+  hr = np.append(temp.T,np.array([1]))
+  next_points[i] = np.dot(g,hr)
+
+next_points = next_points[:,:2]
+
+print "Points: "
+print points
+print
+print "Next: "
+print next_points
+print
